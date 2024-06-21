@@ -16,14 +16,14 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.*;
 
-public class framework {
+public class MenuDeAcciones {
     private static final String CLASES_ACCIONES_KEY = "acciones";
     private static final String MAX_THREADS = "max-threads";
     private final List<Accion> acciones = new ArrayList<>();
     private final List<Accion> accionesSeleccionadas = new ArrayList<>();
     private int maxThreads = 1;
 
-    public framework(String configFile) throws Exception {
+    public MenuDeAcciones(String configFile) throws Exception {
         if (!configFile.endsWith(".properties") && !configFile.endsWith(".json")) {
             throw new IllegalArgumentException("El archivo de configuración debe ser un archivo .properties o .json");
         }
@@ -81,16 +81,14 @@ public class framework {
                 Accion accion = acciones.get(i);
                 // Crea un botón con el nombre del item del menú y la acción asociada
                 Button button = new Button(accion.nombreItemMenu() + accion.descripcionItemMenu(), () -> {
-                    if (maxThreads > accionesSeleccionadas.size()) {
-                        accionesSeleccionadas.add(accion);
-                    }
-                    if (maxThreads == accionesSeleccionadas.size()) {
-                        ejecutarMultiThreaded();
-                    }
+                    accionesSeleccionadas.add(accion);
                 });
                 // Agrega el botón a la panel
                 panel.addComponent(button);
             }
+            Button ejecutarButton = new Button("Ejecutar", () -> {
+                ejecutarMultiThreaded();
+            });
             // Crea un botón para salir
             Button salirButton = new Button("Salir", () -> {
                 try {
@@ -100,8 +98,9 @@ public class framework {
                     e.printStackTrace();
                 }
             });
-            // Añade el botón de salir al panel
+            panel.addComponent(ejecutarButton);
             panel.addComponent(salirButton);
+
             // Crea una ventana básica
             BasicWindow window = new BasicWindow();
             // Establece el panel como el componente de la ventana
@@ -126,7 +125,7 @@ public class framework {
             Future<Void> future = executor.submit(callable);
             futures.add(future);
         }
-        accionesSeleccionadas.clear();
+
         // Esperar a que todas las tareas se completen
         for (Future<Void> future : futures) {
             try {
@@ -137,6 +136,7 @@ public class framework {
         }
 
         executor.shutdown();
+        accionesSeleccionadas.clear();
     }
      /* public void mostrarMenu() {
          Scanner scanner = new Scanner(System.in);

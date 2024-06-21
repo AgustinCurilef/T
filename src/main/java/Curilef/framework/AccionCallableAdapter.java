@@ -11,7 +11,9 @@ public class AccionCallableAdapter implements Callable<Void> {
 
     @Override
     public Void call() throws Exception {
+        Thread.sleep(1000);
         accion.ejecutar();
+
         return null;
     }
 }
