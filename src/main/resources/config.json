@@ -1,0 +1,8 @@
+{
+  "acciones": [
+    "Curilef.utilizacion.AccionUno",
+    "Curilef.utilizacion.AccionDos",
+    "Curilef.utilizacion.AccionTres"
+  ],
+  "max-threads": 2
+}

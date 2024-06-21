@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="framework-v1.0">
+    <output-path>$PROJECT_DIR$/out/artifacts/framework_v1_0</output-path>
+    <root id="archive" name="TP_10-Frameworks.jar">
+      <element id="module-output" name="TP_10-Frameworks" />
+    </root>
+  </artifact>
+</component>
